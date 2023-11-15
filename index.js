@@ -22,25 +22,41 @@ function computerWin (){
 }
 
 function chooseWinner(player_score,computer_score){
-    if (player_score > computer_score) { return "Grand Winner: Player Wins";}
-    else if (computer_score>player_score) {return "Grand Winner: Computer Wins";}
-    else {return "Grand Winner: Tie";}
+    if (player_score > computer_score) { 
+        document.querySelector(".round-winner").innerHTML = ""
+        return  document.querySelector(".grand-winner").innerHTML = "Grand Winner: Player Wins";
+    }
+    else if (computer_score>player_score) {
+        document.querySelector(".round-winner").innerHTML = ""
+        return  document.querySelector(".grand-winner").innerHTML="Grand Winner: Computer Wins"
+    }
+    else { 
+        document.querySelector(".round-winner").innerHTML = ""
+        return  document.querySelector(".grand-winner").innerHTML="Grand Winner: Tie";
+    }
 }
 
 function playRound(playerSelection, computerSelection) {
 
     if (winCondition[playerSelection] == computerSelection) {
         playerWin();
-        return ("Player Wins");
+        return document.querySelector(".round-winner").innerHTML="Player Won!";
     } else if (playerSelection == computerSelection) {
         playerWin();
         computerWin();
-        return ("It is a Tie");
+        return document.querySelector(".round-winner").innerHTML="Its a Tie!";
     } else {
         computerWin();
-        return ("Computer Wins");
+        return document.querySelector(".round-winner").innerHTML="Computer Won!";
     }
 
+}
+
+function resetGame (){
+    player_score=0;
+    computer_score=0;
+    document.querySelector(".round-winner").innerHTML = "";
+    document.querySelector(".grand-winner").innerHTML = "";
 }
 
 var btns = document.querySelectorAll("button");
@@ -48,11 +64,16 @@ var btns = document.querySelectorAll("button");
 btns.forEach(btn =>{
 
     btn.addEventListener("click",function(e) {
-        console.log(playRound(e.target.value, getComputerChoice()));
+        if (player_score>=5 || computer_score>=5) {
+            resetGame();
+        }
+        playRound(e.target.value, getComputerChoice());
         document.querySelector(".player-score").innerHTML= player_score;
         document.querySelector(".computer-score").innerHTML= computer_score;
-
+        if(player_score==5 || computer_score==5) chooseWinner(player_score,computer_score);
     });
     
 });
+
+
 
