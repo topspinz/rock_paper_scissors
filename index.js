@@ -8,6 +8,7 @@ let winCondition = {
 var player_score=0;
 var computer_score=0;
 
+
 function getComputerChoice() {
     arr = ["rock", "paper", "scissors"];
     return arr[(Math.floor(Math.random() * arr.length))];
@@ -27,6 +28,7 @@ function chooseWinner(player_score,computer_score){
 }
 
 function playRound(playerSelection, computerSelection) {
+
     if (winCondition[playerSelection] == computerSelection) {
         playerWin();
         return ("Player Wins");
@@ -38,17 +40,19 @@ function playRound(playerSelection, computerSelection) {
         computerWin();
         return ("Computer Wins");
     }
+
 }
 
-function game() {
+var btns = document.querySelectorAll("button");
+
+btns.forEach(btn =>{
+
+    btn.addEventListener("click",function(e) {
+        console.log(playRound(e.target.value, getComputerChoice()));
+        document.querySelector(".player-score").innerHTML= player_score;
+        document.querySelector(".computer-score").innerHTML= computer_score;
+
+    });
     
-    for(let i=1;i<=5;i++){
-        const playerSelection = prompt("choose your selection");
-        const computerSelection = getComputerChoice();
-        console.log(playRound(playerSelection.toLowerCase(),computerSelection));
-        
-    }
-    return console.log(chooseWinner(player_score,computer_score));
-}
+});
 
-game();
